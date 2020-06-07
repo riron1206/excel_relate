@@ -17,10 +17,11 @@
 ## マクロ作り方
 - https://www.excelspeedup.com/hajimetenovba/
 ```bash
-*.xlsm ファイル作成
-→メニューから「開発」選び「Visual Basic」を選択 or Alt＋F11
-→画面上のメニューから「挿入」→「標準モジュール」を選ぶ
+.xlsm ファイル作成
+→メニューから「開発」選び「Visual Basic」を選択 or 「Alt＋F11」
+→画面上のメニューから「挿入」選び「標準モジュール」を選択
 →マクロとして実行したい作業をSub中に書く
+例:
 Sub テスト()
     Range("a1") = 1
 End Sub
