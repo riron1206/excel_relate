@@ -29,7 +29,7 @@ End Sub
 ```
 
 ## RelaxTools Addin
-- zip: https://github.com/RelaxTools/RelaxTools-Addin/releases
+- zipファイル: https://github.com/RelaxTools/RelaxTools-Addin/releases
 - zipダウンロード後のインストール手順: https://software.opensquare.net/relaxtools/downld/install/
 
 <!-- 
