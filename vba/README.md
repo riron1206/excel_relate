@@ -28,6 +28,10 @@ End Sub
 ※作ったマクロを実行するショートカットキーは、メニューから「開発」選び「マクロ」を選択して「オプション」から指定できる
 ```
 
+## RelaxTools Addin
+- zip: https://github.com/RelaxTools/RelaxTools-Addin/releases
+- zipダウンロード後のインストール手順: https://software.opensquare.net/relaxtools/downld/install/
+
 <!-- 
 ## License
 This software is released under the MIT License, see LICENSE.
