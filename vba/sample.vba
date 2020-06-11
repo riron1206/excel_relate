@@ -8,7 +8,7 @@ Sub A1セルを選択して保存() 'Subはmain関数に相当するもの
         WS.Cells(1, 1).Select            'A1セル選択
     Next
     WB.Worksheets(1).Activate            '最初のシート選択
-    WB.Save                              ' 上書き保存
+    WB.Save                              '上書き保存
 End Sub
 
 Sub シート全体のフォント変更()
@@ -81,6 +81,83 @@ Function 文字列の前と後ろセルの先頭と末尾の改行を削除(文�
     TrimLF = strTmp
 End Function
 
+
+Sub フォルダ内のファイルを順次処理()
+
+    Dim path, fso, file, files
+    path = "C:/Users/xxxxxx/フォルダ名/"
+    'path = ThisWorkbook.Path & "/フォルダ名/"  '相対パスの場合
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Set files = fso.GetFolder(path).files
+
+    'フォルダ内の全ファイルについて処理
+    For Each file In files
+
+        'ファイルを開いてブックとして取得
+        Dim wb As Workbook
+        Set wb = Workbooks.Open(file)
+
+        'ブックに対する処理
+
+        '保存せずに閉じる
+        Call wb.Close(SaveChanges:=False)
+
+    Next file
+End Sub
+
+' https://okomotot.com/excelvba%EF%BC%9A%E3%83%9E%E3%82%AF%E3%83%AD%E3%81%A7%E3%83%9A%E3%83%BC%E3%82%B8%E6%95%B0%E3%82%92%E5%8F%96%E5%BE%97%E3%81%97%E3%81%A6%E3%82%B7%E3%83%BC%E3%83%88%E4%B8%80%E8%A6%A7%E8%A1%A8%E3%82%92/
+Sub ページ数を取得してシート一覧表を作成()
+
+    Dim mysheet As Worksheet    '各シート
+    Dim page_sum As Integer     'ページ数
+    Dim list() As Variant       'シート名とページ数格納用
+    Dim i As Integer            '配列添え字用
+    Dim maxi As Integer         '配列最大添え字用
+
+    '-----------------------------------------
+    ' シート名とページ数を配列に代入
+    '-----------------------------------------
+    maxi = 0
+
+    'ブックの各シートごとに
+    For Each mysheet In Worksheets
+
+        'シートのページ数取得
+        mysheet.Activate
+        page_sum = Application.ExecuteExcel4Macro("get.document(50)")
+
+        '配列にシート名とページ数を代入
+        ReDim Preserve list(1, maxi)
+        list(0, maxi) = mysheet.Name
+        list(1, maxi) = page_sum
+        maxi = maxi + 1
+
+    Next mysheet
+
+    '-----------------------------------------
+    ' 配列を新規ブックに転記
+    '-----------------------------------------
+
+    '新規ブック追加
+    Workbooks.Add
+    ActiveSheet.Name = "シート一覧"
+
+    'リストタイトル設定
+    Range("A1").Value = "シート名"
+    Range("B1").Value = "ページ数"
+
+    '配列転記
+    For i = 0 To maxi - 1
+        Range("A" & i + 2) = list(0, i)
+        Range("B" & i + 2) = list(1, i)
+    Next
+End Sub
+
+
+Sub ワークブックを作成()
+  Dim wb1 As Workbook
+  Set wb1 = Workbooks.Add
+End Sub
 
 ############################### 取り消し線についての関数 ###############################
 ' https://stabucky.com/wp/archives/3209
@@ -338,3 +415,6 @@ Else If a <=20 Then
 Else
   処理C
 End If
+
+'メッセージboxだす
+MsgBox "処理が完了しました", vbInformation
